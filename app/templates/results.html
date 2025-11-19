@@ -1,0 +1,24 @@
+<!-- Make use of Jinja2 {{double_curly_syntax}} -->
+<!--Jinja is combination of a programming language and HTML (like JSX in React)-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Results</title>
+    </head>
+    <body>
+        <h2>Recommendations similar to "{{movie}}"</h2>
+
+        {% if Recommendations %}
+            <ul>
+                {% recomm for recomm in recommendations %}
+                    <li>{{r["title"]}} ({{r["genre"]}})</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Recommendation for "{{movie}}" not found</p>
+        {% endif %}
+
+        <a href="/">Search again</a>
+    </body>
+</html>
+
