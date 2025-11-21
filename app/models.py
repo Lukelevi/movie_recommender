@@ -145,7 +145,7 @@ def get_all_movies(exclude_title=None) -> list:
 
     return movies
 
-def find_index_of_movie(title: str, all_movies: list, exclude_title=None):
+def find_index_of_movie(title: str, all_movies: list):
     '''Retrieves the index of a number'''
     title = title.lower()
 
