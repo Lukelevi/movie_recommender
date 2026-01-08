@@ -51,13 +51,13 @@ def insert_movie(movie):
     cursor.execute("""
         INSERT INTO movies (title, genre, year, description, rating)
         VALUES (?, ?, ?, ?, ?)
-    """), (
+    """, (
         movie.get("title"),
         movie.get("genre"),
         movie.get("year"),
-        movie.get("desciption"),
+        movie.get("description"),
         movie.get("rating")
-    )
+    ))
 
     con_nect.commit()
     con_nect.close()
@@ -85,9 +85,10 @@ def load_movies_from_csv(csv_path):
                 row.get("genre"),
                 row.get("year"),
                 row.get("description"),
-                float(row["rating"] if row.get(["rating"]) else None) #Our datatype for rating needs to be REAL
+                float(row["rating"] if row.get("rating") else None) #Our datatype for rating needs to be REAL
                 )
-    
+
+
     con_nect.commit()
     con_nect.close()
     #Print success message
@@ -119,8 +120,8 @@ def get_movie_by_genre(genre: str, exclude_title=None) -> list:
             """, (genre, exclude_title))
     else:
         cursor.execute("""
-            SELECT * FROM movieS
-            WHERE genre = ?
+            SELECT * FROM movies 
+            WHERE genre = ? AND title != ?
             LIMIT 5
         """, (genre,))
     
@@ -136,7 +137,7 @@ def get_all_movies(exclude_title=None) -> list:
     cursor = con_nect.cursor()
 
     if exclude_title:
-        cursor.execute("SELECT * FROM movies WHERE title = ?", (exclude_title,))
+        cursor.execute("SELECT * FROM movies WHERE title != ?", (exclude_title,))
     else:
         cursor.execute("SELECT * FROM movies")
     
